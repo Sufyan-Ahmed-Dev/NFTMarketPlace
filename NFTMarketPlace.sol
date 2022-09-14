@@ -17,7 +17,7 @@ contract MyToken is ERC721, ERC721URIStorage, Pausable, Ownable {
     uint public publicLimit = 3;
     uint public WhiteAdmainMint = 3;
     uint public whiteUserLimit = 3;
-    bool public CheckPublicsale;
+    bool public CheckPublicsale = false;
     bool public CheckWhiteListUserSale = true ;
     string public BaseUrl = "https://gateway.pinata.cloud/ipfs/";
 
@@ -69,26 +69,15 @@ contract MyToken is ERC721, ERC721URIStorage, Pausable, Ownable {
     }
 
     function acticePublic() public onlyOwner{
-        // CheckPublicsale = true ;
-        if (CheckPublicsale == true){
-            revert publicSalesAlreadyActice();
-        }
-        else{
-            CheckPublicsale = true;
-            CheckWhiteListUserSale = false;
-            publicLimit += whiteUserLimit;
-            whiteUserLimit -= whiteUserLimit;
-        }
-
+        require(CheckPublicsale != true , "Public Sales is Already active");
+        CheckPublicsale = true;
+        CheckWhiteListUserSale = false;
+        publicLimit += whiteUserLimit;
+        whiteUserLimit -= whiteUserLimit;
     }
     function unActicePublic() public onlyOwner{
+        require(CheckPublicsale != false, "Public Sales Are Alredat UnActive");
         CheckPublicsale = false;
-         if (CheckPublicsale == false){
-            revert publicSalesAlreadyActice();
-        }
-        else{
-            CheckPublicsale = false;
-        }
     }
      
  /**
@@ -99,12 +88,8 @@ contract MyToken is ERC721, ERC721URIStorage, Pausable, Ownable {
     */
     function addWhiteListUser (address _whiteListUser)public onlyOwner{//1219
         // whiteListUser[_whiteListUser] = true; //function parameter 21298 gas
-        if (whiteListUser[_whiteListUser] == true){  //21662
-            revert AlreadyAddWhiteListUser();
-        }
-        else{
-            whiteListUser[_whiteListUser] = true; 
-        }               
+        require(whiteListUser[_whiteListUser] != true ,"This address is Already in List");
+        whiteListUser[_whiteListUser] = true;              
     }
     /**
      * @dev removeWhiteListUser is used to remove WhiteListUser account.
@@ -125,13 +110,8 @@ contract MyToken is ERC721, ERC721URIStorage, Pausable, Ownable {
      * @param _WhiteListAdmin - AdminAddress to be add 
     */
       function addWhiteListadmin (address _WhiteListAdmin)public onlyOwner{
-        // WhiteListAdmin[_WhiteListAdmin] = true; //function parameter
-        if (WhiteListAdmin[_WhiteListAdmin] == true){
-            revert AlreadtAddWhiteListAdmin();
-        }
-        else{
-           WhiteListAdmin[_WhiteListAdmin] = true; 
-        }
+        require(WhiteListAdmin[_WhiteListAdmin] != true , "This address is Already in list");
+        WhiteListAdmin[_WhiteListAdmin] = true; //function parameter
     }
   /**
      * @dev removeWhiteListadmin is used to remove WhiteListAdmin account.
