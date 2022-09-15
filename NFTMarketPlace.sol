@@ -133,6 +133,7 @@ contract DogsNFT is ERC721, ERC721URIStorage, Pausable, Ownable {
     */
     function AdminMint( uint256 tokenId, string memory _metadataHash , string memory _name )public Requirments{
       
+       require(WhiteListAdmin[msg.sender] ==true , " you  are not Whitelist admin");
         require(tokenId != 0 , "TokenId is not equal to 0 ..");
         require(WhiteAdmainMint != 0 ,"White List User Limit reach Out sorry...");
         WhiteAdmainMint = WhiteAdmainMint-1;
@@ -151,6 +152,7 @@ contract DogsNFT is ERC721, ERC721URIStorage, Pausable, Ownable {
       * @param _name - NFT name 
     */
       function WhiteListMint ( uint256 tokenId, string memory _metadataHash , string memory _name )public Requirments{     
+         require(whiteListUser[msg.sender] ==true , " you  are not Whitelist user");
         require(tokenId != 0 , "TokenId is not equal to 0 ..");
         require(whiteUserLimit != 0 ,"White List User Limit reach Out sorry...");
         whiteUserLimit = whiteUserLimit-1;
