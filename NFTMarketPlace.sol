@@ -11,12 +11,12 @@ import "@openzeppelin/contracts/access/Ownable.sol";
  * the Metadata extension, but not including the Enumerable extension, which is available separately as
  * {ERC721Enumerable}.
  */
-contract MyToken is ERC721, ERC721URIStorage, Pausable, Ownable {
+contract DogsNFT is ERC721, ERC721URIStorage, Pausable, Ownable {
 
-    uint public MAX_SUPPLY = 9;
-    uint public publicLimit = 3;
-    uint public WhiteAdmainMint = 3;
-    uint public whiteUserLimit = 3;
+    uint public MAX_SUPPLY = 100;
+    uint public publicLimit = 50;
+    uint public WhiteAdmainMint = 10;
+    uint public whiteUserLimit = 40;
     bool public CheckPublicsale = false;
     bool public CheckWhiteListUserSale = true ;
     string public BaseUrl = "https://gateway.pinata.cloud/ipfs/";
@@ -37,7 +37,7 @@ contract MyToken is ERC721, ERC721URIStorage, Pausable, Ownable {
    error AlreadyAddWhiteListUser();
    error AlreadtAddWhiteListAdmin();
 
-    constructor() ERC721("MyToken", "MTK") { 
+    constructor() ERC721("Sufyan", "SUFI") { 
     }
         modifier Requirments(){
       
@@ -167,7 +167,9 @@ contract MyToken is ERC721, ERC721URIStorage, Pausable, Ownable {
      * @param _metadataHash - NFT Metadata
      * @param _name - NFT name 
     */
-      function publicMint( uint256 tokenId, string memory _metadataHash , string memory _name )public Requirments{
+      function publicMint( uint256 tokenId, string memory _metadataHash , string memory _name )public {
+        require (MAX_SUPPLY != 0 , "NFt Limit has been Crosed");
+        require(balanceOf(msg.sender) != 5 , "your limit is just 5 "); 
         require(tokenId != 0 , "TokenId is not equal to 0 ..");
         require(CheckPublicsale== true ,"Public Sales are not active yet ... come back latter");
         require(publicLimit != 0 , "public limit reach out sorry...");
@@ -215,7 +217,7 @@ contract MyToken is ERC721, ERC721URIStorage, Pausable, Ownable {
      *
      * Emits a {Transfer} event.
      */
-
+     
     function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
         super._burn(tokenId);
     }
