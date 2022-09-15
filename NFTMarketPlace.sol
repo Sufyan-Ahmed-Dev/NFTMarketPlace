@@ -31,12 +31,6 @@ contract DogsNFT is ERC721, ERC721URIStorage, Pausable, Ownable {
     mapping (address => bool) public WhiteListAdmin;
     mapping(uint => NftName ) public NftNames;
 
-    // some basic errors
-    
-   error publicSalesAlreadyActice();
-   error AlreadyAddWhiteListUser();
-   error AlreadtAddWhiteListAdmin();
-
     constructor() ERC721("Sufyan", "SUFI") { 
     }
         modifier Requirments(){
