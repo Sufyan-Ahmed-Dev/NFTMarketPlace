@@ -16,7 +16,7 @@
            - I have set Public User NFt's Limit 
            - Everyone Can mint Public NFT's
 
-*** Owner just mint public NFT's ***
+## Owner just mint public NFT's
 
 *Checks*
    - All Contract function can be pause and unpause by the Owner of the Contract
